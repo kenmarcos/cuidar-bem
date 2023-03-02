@@ -1,38 +1,119 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# React Challenge 20201113
 
-## Getting Started
+## Introdução
 
-First, run the development server:
+Este é um desafio para testar seus conhecimentos em JavaScript e React;
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
+Neste desafio existem várias formas de desenvolver com qualidade e reuso de elemento do projeto. 
+
+O objetivo é avaliar a sua forma de estruturação e autonomia em decisões para construir algo escalável.
+
+### Antes de começar
+ 
+- Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
+- O projeto deve utilizar a Linguagem específica na sua Vaga (caso esteja se candidatando). Por exempo: Python, R, Scala e entre outras;
+- Considere como deadline 5 dias a partir do início do desafio. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
+- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+
+## Desafio / Case
+
+Os sites do cliente Translation, Inc impactam milhões de pessoas mensalmente em diversos países e disponíveis em pelo menos 23 idiomas. 
+Uma das principais características da Translation, Inc é o posicionamento orgânico no Google (SEO). 
+Por isso, todos os projetos devem ser muito bem estruturados pensando em SEO, fluidez, reuso (componentes reutilizados em vários projetos) e velocidade de exibição mensurados através do Google PageSpeed (https://developers.google.com/speed/pagespeed/insights/). 
+O seu objetivo é criar um projeto que dê atenção aos requisitos anteriormente mencionados. 
+
+## Recursos
+
+1. Verificar a documentação: https://developer.wordpress.org/rest-api/ 
+2. Consumir a REST API Wordpress do Mejor Con Salud: https://api.beta.mejorconsalud.com/wp-json/mc/v1/ 
+3. O seu ambiente local rodando na porta 9045 (localhost:9045)
+4. Webpack
+5. React.js
+7. Tailwind CSS: https://tailwindcss.com/ (poderá definir outro se achar mais conveniente). 
+
+## Passo a Passo
+
+### Home Page
+
+Ao abrir a Home deverá conter um buscador de artigos para facilitar aos usuários encontrarem conteúdos personalizados sobre saúde e nutrição.
+Deverá ser possível filtrar os artigos por: "Mais Relevantes" no topo.
+
+Para isso, devemos usar o endpoint de busca:
+
+- https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search={{text digitado no input}} 
+- https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search={{text digitado no input}}&page=1&orderby=relevance
+
+> Exemplo https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search=calabazas
+> Exemplo https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search=calabazas&page=1&orderby=relevance
+
+Exemplo de um resposta com artigos:
+
+```
+{
+"data": [...],
+"size": 62,
+"pages": 7
+}
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Resposta sem dados:
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+```
+{
+"data": [],
+"size": 0,
+"pages": 0
+}
+```
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+Ao ter o resultado é necessário adicionar alguns elementos importantes como:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+- A páginação para navegar entre os resultados
+- Buscador para realizar a busca novamente
+- Adicionar a quantidade de elementos encontrados
+- Tratar o resultado sem artigos (Mensagem: "Não existem artigos relacionados ao termo pesquisado!")
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Tela do Single
 
-## Learn More
+Após pesquisar, deverá ser possível abrir o artigo. Para isso precisamos de uma tela para exibir o conteúdo do artigo.
 
-To learn more about Next.js, take a look at the following resources:
+Na página do single de um artigo deverá conter alguns elementos básicos: título, categoria, data de publicação, conteúdo(texto para leitura), tags, biografias e nome do autor. 
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+> Exemplo de uma página completa: https://mejorconsalud.com/4-formas-de-preparar-banos-para-suavizar-los-pies/ 
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Para obter a informação por artigo, consumir o endpoint: [GET] baseURL/wp-json/mc/v1/posts/{{ID}}
 
-## Deploy on Vercel
+> Exemplo: [GET] https://api.beta.mejorconsalud.com/wp-json/mc/v1/posts/406721 
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Detalhes Gerais do projeto:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Usar Conceitos de Componentização. 
+- Usar os conceitos do `Dynamic Import` nos componentes;   
+- Adicionar recursos para trabalhar com meta-tags, keywords e og:tags na configuração do Server Side Rendering;
+- **Configurar a página individual do artigo com as tags essenciais de SEO**;
+
+## Readme do Repositório
+ 
+- Deve conter o título de cada projeto
+- Uma descrição de uma frase
+- Como instalar e usar o projeto (instruções)
+- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
+ 
+## Finalização 
+
+Avisar sobre a finalização e enviar para correção em: [https://coodesh.com/review-challenge](https://coodesh.com/review-challenge) 
+Após essa etapa será marcado a apresentação/correção do projeto.
+
+## Instruções para a Apresentação: 
+
+1. Será necessário compartilhar a tela durante a vídeo chamada;
+2. Deixe todos os projetos de solução previamente abertos em seu computador antes de iniciar a chamada;
+3. Deixe os ambientes configurados e prontos para rodar; 
+4. Prepara-se pois você será questionado sobre cada etapa e decisão do Challenge;
+5. Prepare uma lista de perguntas, dúvidas, sugestões de melhorias e feedbacks (caso tenha).
+
+## Suporte
+
+Use a [nossa comunidade](https://coodesh.com/desenvolvedores#community) para tirar dúvidas sobre o processo ou envie um e-mail para contato@coodesh.com.
+
+
