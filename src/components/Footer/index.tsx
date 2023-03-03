@@ -12,7 +12,7 @@ const Footer = () => {
   return (
     <footer className="h-44 px-6 border bg-primary border-t-black">
       <div className="max-w-6xl h-full mx-auto text-white space-y-6 flex flex-col justify-center">
-        <section className="flex justify-around items-center">
+        <section className="flex justify-center items-center gap-4">
           <Image src={symbol} alt="Símbolo Cuidar Bem" />
 
           <h4 className="max-w-xl text-center">
