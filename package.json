@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
+    "dev": "next dev -p 9045",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 9045",
     "lint": "next lint"
   },
   "dependencies": {
@@ -15,6 +15,7 @@
     "eslint": "8.35.0",
     "eslint-config-next": "13.2.3",
     "next": "13.2.3",
+    "phosphor-react": "^1.4.1",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "typescript": "4.9.5"
