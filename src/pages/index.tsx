@@ -11,8 +11,8 @@ export default function Home() {
         </h1>
 
         <h4 className="text-center max-w-3xl mx-auto">
-          Os melhores conteúdos sobre saúde e bem-estar de forma rápida, segura
-          e confiável.
+          O melhor conteúdo sobre saúde e bem-estar de forma rápida, segura e
+          confiável.
         </h4>
 
         <form className="flex justify-center gap-1">
