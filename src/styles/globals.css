@@ -19,3 +19,13 @@
     @apply text-2xl font-bold;
   }
 }
+
+@layer components {
+  .btn {
+    @apply flex items-center gap-2 p-4 rounded-lg drop-shadow-lg;
+  }
+
+  .btn-primary {
+    @apply bg-primary text-white duration-300 hover:bg-opacity-60;
+  }
+}
