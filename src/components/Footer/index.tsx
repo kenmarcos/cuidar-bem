@@ -15,8 +15,11 @@ const Footer = () => {
         <section className="flex justify-center items-center gap-4">
           <Image src={symbol} alt="Símbolo Cuidar Bem" />
 
-          <h4 className="max-w-xl text-center text-sm sm:text-2xl">
-            A sua fonte confiável de informações para uma vida saudável.
+          <h4 className="max-w-xl text-center text-sm sm:text-2xl sm:leading-10">
+            A sua fonte de informações{" "}
+            <span className="bg-secondary text-primary p-1">confiável</span>{" "}
+            para uma vida mais{" "}
+            <span className="bg-secondary text-primary p-1">saudável</span>.
           </h4>
         </section>
 
