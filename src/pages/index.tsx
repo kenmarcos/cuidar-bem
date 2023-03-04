@@ -5,22 +5,18 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "@/services";
+import { useState } from "react";
+import { Post } from "@/types";
+import LoadingScreen from "@/components/LoadingScreen";
 
 interface SearchFormData {
   searchInput: string;
 }
 
-const searchPosts = async (data: SearchFormData) => {
-  try {
-    const response = await api.get(`posts?search=${data.searchInput}`);
-
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
-  }
-};
-
 export default function Home() {
+  const [foundPosts, setFoundPosts] = useState<Post[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+
   const schema = yup.object().shape({
     searchInput: yup.string().required(),
   });
@@ -29,9 +25,24 @@ export default function Home() {
     resolver: yupResolver(schema),
   });
 
+  const searchPosts = async (data: SearchFormData) => {
+    setIsLoading(true);
+
+    try {
+      const response = await api.get(`posts?search=${data.searchInput}`);
+
+      setFoundPosts(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
+    setIsLoading(false);
+  };
+
   const onSubmit = (data: SearchFormData) => {
     searchPosts(data);
   };
+
+  // console.log(foundPosts);
 
   return (
     <div className="max-w-6xl mx-auto px-4 py-8">
@@ -52,6 +63,7 @@ export default function Home() {
           <Input
             containerClassName="border-primary border-4 w-full max-w-xl"
             type="text"
+            placeholder="Pesquisar artigos, notícias, dicas..."
             register={register("searchInput")}
           />
 
@@ -61,7 +73,17 @@ export default function Home() {
         </form>
       </section>
 
-      <section></section>
+      {isLoading && <LoadingScreen />}
+
+      {!!foundPosts && (
+        <section>
+          <ul>
+            {foundPosts.map((post) => (
+              <li key={post.id}>{post.title}</li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section></section>
     </div>

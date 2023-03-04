@@ -15,8 +15,7 @@ const Input = ({ containerClassName = "", register, ...rest }: InputProps) => {
         {...rest}
         {...register}
         type="text"
-        className="focus:outline-none w-full"
-        placeholder="Pesquisar artigos, notícias, doenças..."
+        className={`focus:outline-none w-full ${rest.className}`}
       />
     </div>
   );
