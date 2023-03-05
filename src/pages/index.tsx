@@ -8,6 +8,7 @@ import { api } from "@/services";
 import { useState } from "react";
 import { Post } from "@/types";
 import LoadingScreen from "@/components/LoadingScreen";
+import PostCard from "@/components/PostCard";
 
 interface SearchFormData {
   searchInput: string;
@@ -15,6 +16,7 @@ interface SearchFormData {
 
 export default function Home() {
   const [foundPosts, setFoundPosts] = useState<Post[]>([]);
+  const [foundPostsTotal, setFoundPostsTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object().shape({
@@ -32,6 +34,7 @@ export default function Home() {
       const response = await api.get(`posts?search=${data.searchInput}`);
 
       setFoundPosts(response.data.data);
+      setFoundPostsTotal(response.data.size);
     } catch (error) {
       console.log(error);
     }
@@ -45,8 +48,8 @@ export default function Home() {
   // console.log(foundPosts);
 
   return (
-    <div className="max-w-6xl mx-auto px-4 py-8">
-      <section className="space-y-4">
+    <div className="max-w-6xl mx-auto py-8 space-y-16">
+      <section className="space-y-4 px-2">
         <h1 className="text-center text-primary uppercase">
           Cuide Bem de Você
         </h1>
@@ -75,11 +78,25 @@ export default function Home() {
 
       {isLoading && <LoadingScreen />}
 
-      {!!foundPosts && (
-        <section>
-          <ul>
+      {!!foundPosts.length && (
+        <section className="px-2">
+          <span className="mb-4 block max-w-4xl mx-auto text-xl">
+            {foundPostsTotal} Resultado{foundPostsTotal > 1 && "s"} encontrado
+            {foundPostsTotal > 1 && "s"}
+          </span>
+
+          <ul className="max-w-4xl mx-auto space-y-10">
             {foundPosts.map((post) => (
-              <li key={post.id}>{post.title}</li>
+              <li key={post.id}>
+                <PostCard
+                  postSlug={post.slug}
+                  postThumbnail={post.featured_media.thumbnail}
+                  postTitle={post.title}
+                  postExcerpt={post.excerpt}
+                  postCategoryName={post.categories[0].name}
+                  postModified={post.modified}
+                />
+              </li>
             ))}
           </ul>
         </section>

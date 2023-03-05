@@ -10,7 +10,9 @@ const Layout = ({ children }: LayoutProps) => {
   return (
     <>
       <Header />
-      <main className="pt-24 min-h-[calc(100vh-176px)]">{children}</main>
+      <main className="bg-secondary-light pt-24 min-h-[calc(100vh-176px)]">
+        {children}
+      </main>
       <Footer />
     </>
   );
