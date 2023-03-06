@@ -17,9 +17,13 @@ const Footer = () => {
 
           <h4 className="max-w-xl text-center text-sm sm:text-2xl sm:leading-10">
             A sua fonte de informações{" "}
-            <span className="bg-secondary text-primary p-1">confiável</span>{" "}
+            <span className="bg-secondary text-primary p-1 rounded-lg">
+              confiável
+            </span>{" "}
             para uma vida mais{" "}
-            <span className="bg-secondary text-primary p-1">saudável</span>.
+            <span className="bg-secondary text-primary p-1 rounded-lg">
+              saudável
+            </span>
           </h4>
         </section>
 
