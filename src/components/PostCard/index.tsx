@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 interface PostCardProps {
+  postId: number;
   postSlug: string;
   postThumbnail: string;
   postTitle: string;
@@ -12,6 +13,7 @@ interface PostCardProps {
 }
 
 const PostCard = ({
+  postId,
   postSlug,
   postThumbnail,
   postTitle,
@@ -21,7 +23,10 @@ const PostCard = ({
 }: PostCardProps) => {
   return (
     <Link
-      href={postSlug}
+      href={{
+        pathname: `posts/${postId}`,
+        query: { slug: postSlug },
+      }}
       className="flex gap-4 flex-col sm:flex-row sm:items-center"
     >
       <figure>

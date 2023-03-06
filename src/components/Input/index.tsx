@@ -15,7 +15,7 @@ const Input = ({ containerClassName = "", register, ...rest }: InputProps) => {
         {...rest}
         {...register}
         type="text"
-        className={`focus:outline-none w-full ${rest.className}`}
+        className={`focus:outline-none w-full bg-transparent ${rest.className}`}
       />
     </div>
   );
