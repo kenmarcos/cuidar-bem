@@ -15,6 +15,7 @@ interface SearchFormData {
 }
 
 export default function Home() {
+  const [search, setSearch] = useState("");
   const [foundPosts, setFoundPosts] = useState<Post[]>([]);
   const [foundPostsTotal, setFoundPostsTotal] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +29,8 @@ export default function Home() {
   });
 
   const searchPosts = async (data: SearchFormData) => {
+    setSearch(data.searchInput);
+
     setIsLoading(true);
 
     try {
@@ -43,6 +46,21 @@ export default function Home() {
 
   const onSubmit = (data: SearchFormData) => {
     searchPosts(data);
+  };
+
+  const handleFilter = async () => {
+    try {
+      const response = await api.get("posts", {
+        params: {
+          search,
+          orderby: "relevance",
+        },
+      });
+
+      setFoundPosts(response.data.data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   // console.log(foundPosts);
@@ -80,10 +98,19 @@ export default function Home() {
 
       {!!foundPosts.length && (
         <section className="px-2">
-          <span className="mb-4 block max-w-4xl mx-auto text-xl">
-            {foundPostsTotal} Resultado{foundPostsTotal > 1 && "s"} encontrado
-            {foundPostsTotal > 1 && "s"}
-          </span>
+          <div className="mb-4 max-w-4xl mx-auto flex justify-between items-center">
+            <span className="text-xl">
+              {foundPostsTotal} Resultado{foundPostsTotal > 1 && "s"} encontrado
+              {foundPostsTotal > 1 && "s"}
+            </span>
+
+            <Button
+              className="btn-sm btn-primary-outline"
+              onClick={handleFilter}
+            >
+              Mais Relevantes
+            </Button>
+          </div>
 
           <ul className="max-w-4xl mx-auto space-y-10">
             {foundPosts.map((post) => (

@@ -32,4 +32,8 @@
   .btn-primary {
     @apply bg-primary text-white duration-300 hover:bg-opacity-60;
   }
+
+  .btn-primary-outline {
+    @apply border-2 border-primary text-primary duration-300 hover:bg-primary hover:text-white;
+  }
 }
