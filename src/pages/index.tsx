@@ -66,8 +66,8 @@ export default function Home() {
   // console.log(foundPosts);
 
   return (
-    <div className="max-w-6xl mx-auto py-8 space-y-16">
-      <section className="space-y-4 px-2">
+    <div className="max-w-6xl mx-auto py-8">
+      <section className="space-y-4 px-2 mb-16">
         <h1 className="text-center text-primary uppercase">
           Cuide Bem de Você
         </h1>
