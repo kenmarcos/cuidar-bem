@@ -15,73 +15,69 @@ interface PostDetailsProps {
   post: PostDetails;
 }
 
-const options: HTMLReactParserOptions = {
+const contentOptions: HTMLReactParserOptions = {
   replace: (domNode: DOMNode) => {
-    if (
-      domNode instanceof Element &&
-      domNode.attribs &&
-      domNode.name === "h2"
-    ) {
+    if (domNode instanceof Element && domNode.name === "h2") {
       return (
         <h2 className="mt-8 mb-4 text-primary">
-          {domToReact(domNode.children, options)}
+          {domToReact(domNode.children, contentOptions)}
         </h2>
       );
     }
 
-    if (
-      domNode instanceof Element &&
-      domNode.attribs &&
-      domNode.name === "h3"
-    ) {
+    if (domNode instanceof Element && domNode.name === "h3") {
       return (
         <h3 className="mt-6 mb-2 text-primary-light">
-          {domToReact(domNode.children, options)}
+          {domToReact(domNode.children, contentOptions)}
         </h3>
       );
     }
 
-    if (
-      domNode instanceof Element &&
-      domNode.attribs &&
-      domNode.name === "h4"
-    ) {
+    if (domNode instanceof Element && domNode.name === "h4") {
       return (
         <h4 className="mt-4 text-secondary">
-          {domToReact(domNode.children, options)}
+          {domToReact(domNode.children, contentOptions)}
         </h4>
       );
     }
 
-    if (domNode instanceof Element && domNode.attribs && domNode.name === "p") {
+    if (domNode instanceof Element && domNode.name === "p") {
       return (
         <p className="mb-4 leading-7">
-          {domToReact(domNode.children, options)}
+          {domToReact(domNode.children, contentOptions)}
         </p>
       );
     }
 
-    if (
-      domNode instanceof Element &&
-      domNode.attribs &&
-      domNode.name === "ul"
-    ) {
+    if (domNode instanceof Element && domNode.name === "ul") {
       return (
         <ul className="my-4 pl-6 space-y-2 list-disc">
-          {domToReact(domNode.children, options)}
+          {domToReact(domNode.children, contentOptions)}
         </ul>
       );
     }
 
-    if (domNode instanceof Element && domNode.attribs && domNode.name === "a") {
+    if (domNode instanceof Element && domNode.name === "a") {
       const props = attributesToProps(domNode.attribs);
       return (
         <a
           {...props}
           className="underline text-primary-light cursor-pointer hover:no-underline"
         >
-          {domToReact(domNode.children, options)}
+          {domToReact(domNode.children, contentOptions)}
         </a>
+      );
+    }
+  },
+};
+
+const bibliographyOptions: HTMLReactParserOptions = {
+  replace: (domNode: DOMNode) => {
+    if (domNode instanceof Element && domNode.name === "ul") {
+      return (
+        <ul className="bg-white p-8 space-y-2 list-disc">
+          {domToReact(domNode.children, bibliographyOptions)}
+        </ul>
       );
     }
   },
@@ -141,9 +137,17 @@ function PostDetails({ post }: PostDetailsProps) {
           </div>
         </div>
 
-        <div className="max-w-4xl mx-auto">{parse(post.content, options)}</div>
+        <div className="max-w-4xl mx-auto">
+          {parse(post.content, contentOptions)}
 
-        {/* {parse(post.bibliography)} */}
+          <details className="mt-10 rounded-lg overflow-hidden">
+            <summary className="bg-secondary p-4 text-primary-light font-bold cursor-pointer hover:text-secondary-light">
+              Bibliografia
+            </summary>
+
+            {parse(post.bibliography, bibliographyOptions)}
+          </details>
+        </div>
       </article>
     </div>
   );
