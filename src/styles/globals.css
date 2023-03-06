@@ -22,7 +22,7 @@
 
 @layer components {
   .btn {
-    @apply flex items-center gap-2 p-3 rounded-lg drop-shadow-lg;
+    @apply flex items-center justify-center gap-2 p-3 rounded-lg drop-shadow-lg;
   }
 
   .btn-sm {
@@ -30,6 +30,10 @@
   }
 
   .btn-primary {
-    @apply bg-primary text-white duration-300 hover:bg-opacity-60;
+    @apply bg-primary border-2 border-primary text-white duration-300 hover:bg-opacity-60;
+  }
+
+  .btn-primary-outline {
+    @apply border-2 border-primary text-primary duration-300 hover:bg-primary hover:text-white;
   }
 }
