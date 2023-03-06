@@ -1,6 +1,6 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import { MagnifyingGlass } from "phosphor-react";
+import { MagnifyingGlass, Spinner } from "phosphor-react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -22,6 +22,7 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(0);
   const [isOrderedByRelevance, setIsOrderedByRelevance] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [isLoadingPagination, setIsLoadingPagination] = useState(false);
 
   const schema = yup.object().shape({
     searchInput: yup.string().required(),
@@ -51,6 +52,7 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+
     setIsLoading(false);
   };
 
@@ -59,6 +61,8 @@ export default function Home() {
   };
 
   const handleFilter = async () => {
+    setIsLoading(true);
+
     setIsOrderedByRelevance(!isOrderedByRelevance);
 
     try {
@@ -76,10 +80,13 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+
+    setIsLoading(false);
   };
 
   const handlePagination = async () => {
-    console.log(isOrderedByRelevance);
+    setIsLoadingPagination(true);
+
     const nextPage = currentPage + 1;
 
     try {
@@ -96,6 +103,8 @@ export default function Home() {
     } catch (error) {
       console.log(error);
     }
+
+    setIsLoadingPagination(false);
   };
 
   return (
@@ -169,7 +178,14 @@ export default function Home() {
                 className="btn-primary-outline w-1/2"
                 onClick={handlePagination}
               >
-                Carregar mais...
+                {isLoadingPagination ? (
+                  <>
+                    <Spinner size={22} className="animate-spin" />
+                    <span className="animate-pulse">Carregando...</span>
+                  </>
+                ) : (
+                  "Carregar mais..."
+                )}
               </Button>
             </div>
           )}
