@@ -36,7 +36,8 @@ const PostCard = ({
           height={150}
           alt={postTitle}
           quality={100}
-          className="hover:scale-105"
+          placeholder="blur"
+          blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z3CxHgAGJwJRlQ7WHwAAAABJRU5ErkJggg=="
         />
       </figure>
 
