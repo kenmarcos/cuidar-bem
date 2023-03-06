@@ -11,6 +11,7 @@ import parse, {
 } from "html-react-parser";
 import Image from "next/image";
 import LoadingScreen from "@/components/LoadingScreen";
+import BackToTopButton from "@/components/BackToTopButton";
 
 interface PostDetailsProps {
   post: PostDetails;
@@ -154,6 +155,8 @@ function PostDetails({ post }: PostDetailsProps) {
           </details>
         </div>
       </article>
+
+      <BackToTopButton />
     </div>
   );
 }

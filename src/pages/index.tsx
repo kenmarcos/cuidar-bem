@@ -18,6 +18,7 @@ import Image from "next/image";
 import banner from "public/banner-cuidar-bem.png";
 import Link from "next/link";
 import logo from "public/logo-cuidar-bem.png";
+import BackToTopButton from "@/components/BackToTopButton";
 
 interface HomeProps {
   posts: Post[];
@@ -271,6 +272,8 @@ export default function Home({ posts }: HomeProps) {
           </>
         )}
       </section>
+
+      <BackToTopButton />
     </div>
   );
 }
