@@ -179,9 +179,9 @@ export default function Home({ posts }: HomeProps) {
       </section>
 
       <section id="searching" className="space-y-6 px-2 mt-12 mb-10">
-        <figure className="flex justify-center">
-          <Image src={logo} alt="Logo Cuidar Bem" width={360} height={100} />
-        </figure>
+        <div className="flex justify-center w-[360]">
+          <Image src={logo} alt="Logo Cuidar Bem" quality={100} priority />
+        </div>
 
         <h4 className="text-center max-w-3xl mx-auto">
           Encontre os melhores conteúdos sobre saúde e bem-estar de forma
