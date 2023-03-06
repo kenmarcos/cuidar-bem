@@ -10,6 +10,7 @@ import parse, {
   attributesToProps,
 } from "html-react-parser";
 import Image from "next/image";
+import LoadingScreen from "@/components/LoadingScreen";
 
 interface PostDetailsProps {
   post: PostDetails;
@@ -84,6 +85,10 @@ const bibliographyOptions: HTMLReactParserOptions = {
 };
 
 function PostDetails({ post }: PostDetailsProps) {
+  if (!post) {
+    return <LoadingScreen />;
+  }
+
   return (
     <div className="max-w-6xl mx-auto py-8">
       <article className="px-2 space-y-8">
@@ -166,7 +171,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     props: {
       post,
     },
-    revalidate: 60 * 60 * 2,
+    revalidate: 60 * 60 * 24, // A cada 24h
   };
 };
 
@@ -181,6 +186,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
   return {
     paths,
-    fallback: "blocking",
+    fallback: true,
   };
 };

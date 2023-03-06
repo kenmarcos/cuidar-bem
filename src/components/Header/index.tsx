@@ -13,7 +13,7 @@ const Header = () => {
   const { pathname } = router;
 
   return (
-    <header className="w-screen h-20 shadow-lg fixed bg-white px-6">
+    <header className="w-screen h-20 shadow-lg fixed bg-white px-6 z-10">
       <div className="max-w-6xl h-full mx-auto flex justify-between items-center">
         <Link href="/">
           <Image src={logo} alt="Logo Cuidar Bem" width={180} height={50} />
