@@ -89,6 +89,7 @@ export default function Home() {
             {foundPosts.map((post) => (
               <li key={post.id}>
                 <PostCard
+                  postId={post.id}
                   postSlug={post.slug}
                   postThumbnail={post.featured_media.thumbnail}
                   postTitle={post.title}
