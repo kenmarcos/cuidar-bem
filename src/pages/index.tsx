@@ -18,6 +18,9 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [foundPosts, setFoundPosts] = useState<Post[]>([]);
   const [foundPostsTotal, setFoundPostsTotal] = useState(0);
+  const [totalPages, setTotalPages] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [isOrderedByRelevance, setIsOrderedByRelevance] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const schema = yup.object().shape({
@@ -30,14 +33,21 @@ export default function Home() {
 
   const searchPosts = async (data: SearchFormData) => {
     setSearch(data.searchInput);
+    setIsOrderedByRelevance(false);
 
     setIsLoading(true);
 
     try {
-      const response = await api.get(`posts?search=${data.searchInput}`);
+      const response = await api.get("posts", {
+        params: {
+          search: data.searchInput,
+        },
+      });
 
       setFoundPosts(response.data.data);
       setFoundPostsTotal(response.data.size);
+      setTotalPages(response.data.pages);
+      setCurrentPage(1);
     } catch (error) {
       console.log(error);
     }
@@ -49,21 +59,44 @@ export default function Home() {
   };
 
   const handleFilter = async () => {
+    setIsOrderedByRelevance(!isOrderedByRelevance);
+
     try {
       const response = await api.get("posts", {
         params: {
           search,
-          orderby: "relevance",
+          orderby: !isOrderedByRelevance ? "relevance" : null,
         },
       });
 
       setFoundPosts(response.data.data);
+      setFoundPostsTotal(response.data.size);
+      setTotalPages(response.data.pages);
+      setCurrentPage(1);
     } catch (error) {
       console.log(error);
     }
   };
 
-  // console.log(foundPosts);
+  const handlePagination = async () => {
+    console.log(isOrderedByRelevance);
+    const nextPage = currentPage + 1;
+
+    try {
+      const response = await api.get("posts", {
+        params: {
+          search,
+          page: nextPage,
+          orderby: isOrderedByRelevance ? "relevance" : null,
+        },
+      });
+
+      setFoundPosts([...foundPosts, ...response.data.data]);
+      setCurrentPage(currentPage + 1);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <div className="max-w-6xl mx-auto py-8">
@@ -97,28 +130,30 @@ export default function Home() {
       {isLoading && <LoadingScreen />}
 
       {!!foundPosts.length && (
-        <section className="px-2">
-          <div className="mb-4 max-w-4xl mx-auto flex justify-between items-center">
+        <section className="px-2 max-w-4xl mx-auto ">
+          <div className="mb-4 flex justify-between items-center">
             <span className="text-xl">
               {foundPostsTotal} Resultado{foundPostsTotal > 1 && "s"} encontrado
               {foundPostsTotal > 1 && "s"}
             </span>
 
             <Button
-              className="btn-sm btn-primary-outline"
+              className={`btn-sm ${
+                isOrderedByRelevance ? "btn-primary" : "btn-primary-outline"
+              }`}
               onClick={handleFilter}
             >
               Mais Relevantes
             </Button>
           </div>
 
-          <ul className="max-w-4xl mx-auto space-y-10">
+          <ul className="space-y-10">
             {foundPosts.map((post) => (
               <li key={post.id}>
                 <PostCard
                   postId={post.id}
                   postSlug={post.slug}
-                  postThumbnail={post.featured_media.thumbnail}
+                  postThumbnail={post.featured_media?.thumbnail}
                   postTitle={post.title}
                   postExcerpt={post.excerpt}
                   postCategoryName={post.categories[0].name}
@@ -127,6 +162,17 @@ export default function Home() {
               </li>
             ))}
           </ul>
+
+          {currentPage < totalPages && (
+            <div className="flex justify-center mt-8">
+              <Button
+                className="btn-primary-outline w-1/2"
+                onClick={handlePagination}
+              >
+                Carregar mais...
+              </Button>
+            </div>
+          )}
         </section>
       )}
 
