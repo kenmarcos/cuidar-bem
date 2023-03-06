@@ -5,7 +5,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "@/services";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Post } from "@/types";
 import LoadingScreen from "@/components/LoadingScreen";
 import PostCard from "@/components/PostCard";
@@ -177,7 +177,7 @@ export default function Home({ posts }: HomeProps) {
         </Swiper>
       </section>
 
-      <section className="space-y-6 px-2 mt-12 mb-10">
+      <section id="searching" className="space-y-6 px-2 mt-12 mb-10">
         <figure className="flex justify-center">
           <Image src={logo} alt="Logo Cuidar Bem" width={360} height={100} />
         </figure>

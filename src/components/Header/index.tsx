@@ -1,6 +1,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useRouter } from "next/router";
+import { MagnifyingGlass } from "phosphor-react";
 import logo from "public/logo-cuidar-bem.png";
 
 const navigations = [
@@ -19,7 +20,7 @@ const Header = () => {
           <Image src={logo} alt="Logo Cuidar Bem" width={180} height={50} />
         </Link>
 
-        <nav className="h-full">
+        <nav className="h-full flex items-center">
           <ul className="h-full flex">
             {navigations.map((navItem) => (
               <li key={navItem.label} className="h-full">
@@ -34,6 +35,10 @@ const Header = () => {
               </li>
             ))}
           </ul>
+
+          <Link href="/#searching" className="ml-2 text-primary">
+            <MagnifyingGlass size={30} />
+          </Link>
         </nav>
       </div>
     </header>
