@@ -6,7 +6,11 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
   register?: UseFormRegisterReturn;
 }
 
-const Input = ({ containerClassName = "", register, ...rest }: InputProps) => {
+export const Input = ({
+  containerClassName = "",
+  register,
+  ...rest
+}: InputProps) => {
   return (
     <div
       className={`flex items-center border rounded-lg py-2 px-4 ${containerClassName}`}

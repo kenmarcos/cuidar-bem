@@ -1,11 +1,11 @@
 import Button from "@/components/Button";
 import Input from "@/components/Input";
-import { MagnifyingGlass, Spinner } from "phosphor-react";
+import { MagnifyingGlass, Spinner, Warning } from "phosphor-react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { api } from "@/services";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Post } from "@/types";
 import LoadingScreen from "@/components/LoadingScreen";
 import PostCard from "@/components/PostCard";
@@ -18,17 +18,18 @@ export default function Home() {
   const [search, setSearch] = useState("");
   const [foundPosts, setFoundPosts] = useState<Post[]>([]);
   const [foundPostsTotal, setFoundPostsTotal] = useState(0);
-  const [totalPages, setTotalPages] = useState(0);
+  const [totalPages, setTotalPages] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(0);
   const [isOrderedByRelevance, setIsOrderedByRelevance] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [isLoadingPagination, setIsLoadingPagination] = useState(false);
+  const searchInputRef = useRef<HTMLInputElement>(null);
 
   const schema = yup.object().shape({
     searchInput: yup.string().required(),
   });
 
-  const { register, handleSubmit } = useForm<SearchFormData>({
+  const { register, handleSubmit, setFocus } = useForm<SearchFormData>({
     resolver: yupResolver(schema),
   });
 
@@ -138,59 +139,71 @@ export default function Home() {
 
       {isLoading && <LoadingScreen />}
 
-      {!!foundPosts.length && (
-        <section className="px-2 max-w-4xl mx-auto ">
-          <div className="mb-4 flex justify-between items-center">
-            <span className="text-xl">
-              {foundPostsTotal} Resultado{foundPostsTotal > 1 && "s"} encontrado
-              {foundPostsTotal > 1 && "s"}
-            </span>
-
-            <Button
-              className={`btn-sm ${
-                isOrderedByRelevance ? "btn-primary" : "btn-primary-outline"
-              }`}
-              onClick={handleFilter}
-            >
-              Mais Relevantes
-            </Button>
+      <section className="px-2 max-w-4xl mx-auto ">
+        {totalPages === 0 && (
+          <div className="text-center text-gray-500 gap-2">
+            <Warning size={68} className="inline-block" />
+            <p className="max-w-md mx-auto text-xl text-center">
+              Não existem artigos relacionados ao termo pesquisado!
+            </p>
           </div>
+        )}
 
-          <ul className="space-y-10">
-            {foundPosts.map((post) => (
-              <li key={post.id}>
-                <PostCard
-                  postId={post.id}
-                  postSlug={post.slug}
-                  postThumbnail={post.featured_media?.thumbnail}
-                  postTitle={post.title}
-                  postExcerpt={post.excerpt}
-                  postCategoryName={post.categories[0].name}
-                  postModified={post.modified}
-                />
-              </li>
-            ))}
-          </ul>
+        {!!foundPosts.length && (
+          <>
+            <div className="mb-4 flex justify-between items-center">
+              <span className="text-xl">
+                {foundPostsTotal} Resultado{foundPostsTotal > 1 && "s"}{" "}
+                encontrado
+                {foundPostsTotal > 1 && "s"}
+              </span>
 
-          {currentPage < totalPages && (
-            <div className="flex justify-center mt-8">
               <Button
-                className="btn-primary-outline w-1/2"
-                onClick={handlePagination}
+                className={`btn-sm ${
+                  isOrderedByRelevance ? "btn-primary" : "btn-primary-outline"
+                }`}
+                onClick={handleFilter}
               >
-                {isLoadingPagination ? (
-                  <>
-                    <Spinner size={22} className="animate-spin" />
-                    <span className="animate-pulse">Carregando...</span>
-                  </>
-                ) : (
-                  "Carregar mais..."
-                )}
+                Mais Relevantes
               </Button>
             </div>
-          )}
-        </section>
-      )}
+
+            <ul className="space-y-10">
+              {foundPosts.map((post) => (
+                <li key={post.id}>
+                  <PostCard
+                    postId={post.id}
+                    postSlug={post.slug}
+                    postThumbnail={post.featured_media?.thumbnail}
+                    postTitle={post.title}
+                    postExcerpt={post.excerpt}
+                    postCategoryName={post.categories[0].name}
+                    postModified={post.modified}
+                  />
+                </li>
+              ))}
+            </ul>
+
+            {currentPage < (totalPages as number) && (
+              <div className="flex justify-center mt-8">
+                <Button
+                  className="btn-primary-outline w-1/2"
+                  onClick={handlePagination}
+                >
+                  {isLoadingPagination ? (
+                    <>
+                      <Spinner size={22} className="animate-spin" />
+                      <span className="animate-pulse">Carregando...</span>
+                    </>
+                  ) : (
+                    "Carregar mais..."
+                  )}
+                </Button>
+              </div>
+            )}
+          </>
+        )}
+      </section>
 
       <section></section>
     </div>
