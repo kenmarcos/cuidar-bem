@@ -1,119 +1,91 @@
-# React Challenge 20201113
+<h1 align="center">
+    <img src="public/logo-cuidar-bem.png">
+</h1>
 
-## Introdução
+## Índice
 
-Este é um desafio para testar seus conhecimentos em JavaScript e React;
+- **[Sobre o Projeto](#%EF%B8%8F-sobre-o-projeto)**
+- **[Funcionalidades](#-funcionalidades)**
+- **[Demonstração](#-demonstração)**
+- **[Instalação](#%EF%B8%8F-instalação)**
+- **[Tecnologias](#-tecnologias)**
+- **[Autor](#-autor)**
 
-Neste desafio existem várias formas de desenvolver com qualidade e reuso de elemento do projeto. 
+## 🖥️ Sobre o Projeto
 
-O objetivo é avaliar a sua forma de estruturação e autonomia em decisões para construir algo escalável.
+O Cuidar Bem é uma plataforma que oferece conteúdo sobre saúde, bem-estar e qualidade de vida, com informações precisas e confiáveis.
 
-### Antes de começar
- 
-- Prepare o projeto para ser disponibilizado no Github, copiando o conteúdo deste repositório para o seu (ou utilize o fork do projeto e aponte para o Github). Confirme que a visibilidade do projeto é pública (não esqueça de colocar no readme a referência a este challenge);
-- O projeto deve utilizar a Linguagem específica na sua Vaga (caso esteja se candidatando). Por exempo: Python, R, Scala e entre outras;
-- Considere como deadline 5 dias a partir do início do desafio. Caso tenha sido convidado a realizar o teste e não seja possível concluir dentro deste período, avise a pessoa que o convidou para receber instruções sobre o que fazer.
-- Documentar todo o processo de investigação para o desenvolvimento da atividade (README.md no seu repositório); os resultados destas tarefas são tão importantes do que o seu processo de pensamento e decisões à medida que as completa, por isso tente documentar e apresentar os seus hipóteses e decisões na medida do possível.
+## 💡 Funcionalidades
 
-## Desafio / Case
+- [x] Tela inicial (Home)
+  - [x] Exibição de prévias de artigos em slide 
+  - [x] Buscador de artigos sobre conteúdos de saúde
+  - [x] Listagem dos artigos encontrados na pesquisa com paginação
+  - [x] Filtragem dos artigos encontrados por "Mais Relevantes"
+  - [x] Tratamento com mensagem de erro quando a pesquisa não encontrar artigos
+- [x] Tela de detalhes do artigo
+  - [x] Exibição do conteúdo do artigo e informações adicionais
+    - [x] Título, categoria, data de publicação, conteúdo, tags, bibliografias e nome do autor
+- [x] Tela "Sobre"
+  - [x] Texto com descrição e mais informações sobre a plataforma
 
-Os sites do cliente Translation, Inc impactam milhões de pessoas mensalmente em diversos países e disponíveis em pelo menos 23 idiomas. 
-Uma das principais características da Translation, Inc é o posicionamento orgânico no Google (SEO). 
-Por isso, todos os projetos devem ser muito bem estruturados pensando em SEO, fluidez, reuso (componentes reutilizados em vários projetos) e velocidade de exibição mensurados através do Google PageSpeed (https://developers.google.com/speed/pagespeed/insights/). 
-O seu objetivo é criar um projeto que dê atenção aos requisitos anteriormente mencionados. 
+## 🚀 Demonstração
 
-## Recursos
+**Deploy da aplicação**: [![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=flat-square&logo=vercel&logoColor=white)](https://clinitic-web.vercel.app/)
 
-1. Verificar a documentação: https://developer.wordpress.org/rest-api/ 
-2. Consumir a REST API Wordpress do Mejor Con Salud: https://api.beta.mejorconsalud.com/wp-json/mc/v1/ 
-3. O seu ambiente local rodando na porta 9045 (localhost:9045)
-4. Webpack
-5. React.js
-7. Tailwind CSS: https://tailwindcss.com/ (poderá definir outro se achar mais conveniente). 
+## ⚙️ Instalação
 
-## Passo a Passo
+- Faça o fork deste repositório;
 
-### Home Page
+- Abra o terminal e clone o repositório:
 
-Ao abrir a Home deverá conter um buscador de artigos para facilitar aos usuários encontrarem conteúdos personalizados sobre saúde e nutrição.
-Deverá ser possível filtrar os artigos por: "Mais Relevantes" no topo.
-
-Para isso, devemos usar o endpoint de busca:
-
-- https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search={{text digitado no input}} 
-- https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search={{text digitado no input}}&page=1&orderby=relevance
-
-> Exemplo https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search=calabazas
-> Exemplo https://api.beta.mejorconsalud.com/wp-json/mc/v2/posts?search=calabazas&page=1&orderby=relevance
-
-Exemplo de um resposta com artigos:
-
-```
-{
-"data": [...],
-"size": 62,
-"pages": 7
-}
+```Bash
+$ git clone git@github.com:kenmarcos/cuidar-bem.git
 ```
 
-Resposta sem dados:
+- Entre no diretório do projeto
 
-```
-{
-"data": [],
-"size": 0,
-"pages": 0
-}
+```Bash
+$ cd cuidar-bem
 ```
 
-Ao ter o resultado é necessário adicionar alguns elementos importantes como:
+- Instale as dependências
 
-- A páginação para navegar entre os resultados
-- Buscador para realizar a busca novamente
-- Adicionar a quantidade de elementos encontrados
-- Tratar o resultado sem artigos (Mensagem: "Não existem artigos relacionados ao termo pesquisado!")
+```Bash
+$ yarn install
+```
 
-### Tela do Single
+- Execute a aplicação
 
-Após pesquisar, deverá ser possível abrir o artigo. Para isso precisamos de uma tela para exibir o conteúdo do artigo.
+```Bash
+$ yarn dev
+```
 
-Na página do single de um artigo deverá conter alguns elementos básicos: título, categoria, data de publicação, conteúdo(texto para leitura), tags, biografias e nome do autor. 
+Pronto! A aplicação, agora, pode ser acessada através da rota http://localhost:9045/.
 
-> Exemplo de uma página completa: https://mejorconsalud.com/4-formas-de-preparar-banos-para-suavizar-los-pies/ 
+## ⚒ Tecnologias
 
-Para obter a informação por artigo, consumir o endpoint: [GET] baseURL/wp-json/mc/v1/posts/{{ID}}
+Para o desenvolvimento desse projeto, as seguintes ferramentas foram utilizadas:
 
-> Exemplo: [GET] https://api.beta.mejorconsalud.com/wp-json/mc/v1/posts/406721 
+- [Next.js](https://nextjs.org/)
+- [React.js](https://pt-br.reactjs.org/)
+- [TypeScript](https://www.typescriptlang.org/pt/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Axios](https://axios-http.com/ptbr/)
+- [React Hook Form](https://react-hook-form.com/)
+- [Yup](https://github.com/jquense/yup)
+- [Phosphor Icons](https://phosphoricons.com/)
+- [Date-fns](https://date-fns.org/)
+- [Swiper](https://swiperjs.com/)
 
-### Detalhes Gerais do projeto:
+## 👨‍💻 Autor
 
-- Usar Conceitos de Componentização. 
-- Usar os conceitos do `Dynamic Import` nos componentes;   
-- Adicionar recursos para trabalhar com meta-tags, keywords e og:tags na configuração do Server Side Rendering;
-- **Configurar a página individual do artigo com as tags essenciais de SEO**;
+<img style="border-radius: 15%;" src="https://gitlab.com/uploads/-/system/user/avatar/8603970/avatar.png?width=400" width="70px;" alt=""/>
 
-## Readme do Repositório
- 
-- Deve conter o título de cada projeto
-- Uma descrição de uma frase
-- Como instalar e usar o projeto (instruções)
-- Não esqueça o [.gitignore](https://www.toptal.com/developers/gitignore)
- 
-## Finalização 
+Marcos Kenji Kuribayashi
 
-Avisar sobre a finalização e enviar para correção em: [https://coodesh.com/review-challenge](https://coodesh.com/review-challenge) 
-Após essa etapa será marcado a apresentação/correção do projeto.
+[![Linkedin Badge](https://img.shields.io/badge/-LinkedIn-blue?style=flat-square&logo=Linkedin&logoColor=white)](https://www.linkedin.com/in/marcos-kuribayashi/) [![Gmail Badge](https://img.shields.io/badge/-marcosken13@gmail.com-c14438?style=flat-square&logo=Gmail&logoColor=white)](mailto:marcosken13@gmail.com)
 
-## Instruções para a Apresentação: 
+---
 
-1. Será necessário compartilhar a tela durante a vídeo chamada;
-2. Deixe todos os projetos de solução previamente abertos em seu computador antes de iniciar a chamada;
-3. Deixe os ambientes configurados e prontos para rodar; 
-4. Prepara-se pois você será questionado sobre cada etapa e decisão do Challenge;
-5. Prepare uma lista de perguntas, dúvidas, sugestões de melhorias e feedbacks (caso tenha).
-
-## Suporte
-
-Use a [nossa comunidade](https://coodesh.com/desenvolvedores#community) para tirar dúvidas sobre o processo ou envie um e-mail para contato@coodesh.com.
-
-
+Desenvolvido por Marcos Kenji Kuribayashi 😉
