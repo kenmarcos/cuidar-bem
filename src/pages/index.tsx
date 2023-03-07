@@ -145,8 +145,6 @@ export default function Home({ posts }: HomeProps) {
                 width={510}
                 height={510}
                 quality={100}
-                placeholder="blur"
-                blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z3CxHgAGJwJRlQ7WHwAAAABJRU5ErkJggg=="
               />
 
               <div className="space-y-2 bg-secondary-light bg-opacity-60 backdrop-blur-sm absolute top-1/2 md:top-[62%] left-5 max-w-[75%] py-2 px-4 rounded-lg">
