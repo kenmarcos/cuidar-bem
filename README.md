@@ -31,7 +31,7 @@ O Cuidar Bem é uma plataforma que oferece conteúdo sobre saúde, bem-estar e q
 
 ## 🚀 Demonstração
 
-**Deploy da aplicação**: [![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=flat-square&logo=vercel&logoColor=white)](https://clinitic-web.vercel.app/)
+**Acesse o deploy da aplicação**: [![Vercel](https://img.shields.io/badge/vercel-%23000000.svg?style=flat-square&logo=vercel&logoColor=white)](https://cuidar-bem.vercel.app/)
 
 ## ⚙️ Instalação
 
@@ -53,6 +53,11 @@ $ cd cuidar-bem
 
 ```Bash
 $ yarn install
+```
+
+- Adicione o arquivo `.env.local` na raiz do projeto com o seguinte conteúdo:
+```Bash
+NEXT_PUBLIC_API_URL=https://api.beta.mejorconsalud.com/wp-json/mc/v2/
 ```
 
 - Execute a aplicação
