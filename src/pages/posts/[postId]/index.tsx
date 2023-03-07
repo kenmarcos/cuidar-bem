@@ -146,13 +146,15 @@ function PostDetails({ post }: PostDetailsProps) {
         <div className="max-w-4xl mx-auto">
           {parse(post.content, contentOptions)}
 
-          <details className="mt-10 rounded-lg overflow-hidden">
-            <summary className="bg-secondary p-4 text-primary-light font-bold cursor-pointer hover:text-secondary-light">
-              Bibliografia
-            </summary>
+          {!!post.bibliography && (
+            <details className="mt-10 rounded-lg overflow-hidden">
+              <summary className="bg-secondary p-4 text-primary-light font-bold cursor-pointer hover:text-secondary-light">
+                Bibliografia
+              </summary>
 
-            {parse(post.bibliography, bibliographyOptions)}
-          </details>
+              {parse(post.bibliography, bibliographyOptions)}
+            </details>
+          )}
         </div>
       </article>
 
