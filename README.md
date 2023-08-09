@@ -13,7 +13,9 @@
 
 ## 🖥️ Sobre o Projeto
 
-O Cuidar Bem é uma plataforma que oferece conteúdo sobre saúde, bem-estar e qualidade de vida, com informações precisas e confiáveis.
+>Projeto desenvolvido para etapa de desafio técnico de processo seletivo via [Coodesh](https://coodesh.com/)
+
+Cuidar Bem é uma plataforma que oferece conteúdo sobre saúde, bem-estar e qualidade de vida, com informações precisas e confiáveis.
 
 ## 💡 Funcionalidades
 
